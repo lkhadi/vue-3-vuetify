@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { RouterLink, RouterView } from 'vue-router';
+import { RouterView } from 'vue-router';
 import { useDisplay } from 'vuetify';
 const appName = import.meta.env.VITE_APP_NAME;
 let drawer = ref(false);
@@ -29,8 +29,8 @@ if (mobile.value) {
         >
             <v-divider></v-divider>
             <v-list>
-                <RouterLink to="/"><v-list-item link prepend-icon="mdi-folder" :active="menu === 'home'" @click="menu = 'home'">Home</v-list-item></RouterLink>
-                <RouterLink to="/about"><v-list-item link prepend-icon="mdi-folder" :active="menu === 'about'" @click="menu = 'about'">About</v-list-item></RouterLink>
+                <v-list-item to="/" exact link prepend-icon="mdi-folder" :active="menu === 'home'" @click="menu = 'home'">Home</v-list-item>
+                <v-list-item to="/about" link prepend-icon="mdi-folder" :active="menu === 'about'" @click="menu = 'about'">About</v-list-item>
             </v-list>
         </v-navigation-drawer>
 
