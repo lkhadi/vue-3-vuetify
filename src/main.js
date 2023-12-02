@@ -1,5 +1,6 @@
 import './assets/main.css'
 import '@mdi/font/css/materialdesignicons.css'
+import './plugins/axios';
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
