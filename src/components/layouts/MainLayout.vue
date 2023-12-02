@@ -10,7 +10,6 @@ if (mobile.value) {
     drawer = ref(true);
 }
 
-console.log(mobile.value);
 </script>
 <template>
     <v-layout class="rounded rounded-md">
