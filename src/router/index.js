@@ -3,6 +3,7 @@ import MainLayout from '../components/layouts/MainLayout.vue';
 import HomeView from '../views/ExampleView.vue';
 import AboutView from '../views/AboutView.vue';
 import LoginView from '../views/LoginView.vue';
+import { useAuthStore } from '../stores/auth';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,14 +14,20 @@ const router = createRouter({
       component: MainLayout,
       children: [
         {
-          name: 'home',
+          name: 'dashboard',
           path: '/',
-          component: HomeView
+          component: HomeView,
+          meta: {
+            requiresAuth: true,
+          }
         },
         {
-          name: 'about',
-          path: 'about',
-          component: AboutView
+          name: 'book',
+          path: 'buku',
+          component: AboutView,
+          meta: {
+            requiresAuth: true
+          }
         }
       ]
     },
@@ -31,11 +38,17 @@ const router = createRouter({
     }
   ]
 })
-router.beforeEach((to, from) => {
-  // if (to.name !== 'Login' && !isAuthenticated) {
-  //   next({ name: 'Login' })
-  // } else {
-  //   next()
-  // }
+router.beforeEach(async (to, from, next) => {
+  const authStore = useAuthStore();
+  const isTokenExist = await authStore.getAccessToken();
+  if (to.name !== 'login' && isTokenExist === null) {
+    authStore.clearCredentials();
+    next({ name: 'login' });
+  } else if (to.name === 'login' && isTokenExist !== null) {
+    next({ name: 'dashboard' });
+  } else {
+    next();
+  }
 })
+
 export default router
