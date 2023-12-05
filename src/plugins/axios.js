@@ -26,7 +26,7 @@ export function request(method, url, config, withAuth = true) {
         }).then((response) => {
             resolve(response.data);
         }).catch((error) => {
-            if (error.response.status === 401 && withAuth) {
+            if (error.response !== undefined && error.response.status === 401 && withAuth) {
                 authStore.clearCredentials();
                 window.location = `/login`;
             }
@@ -35,32 +35,32 @@ export function request(method, url, config, withAuth = true) {
     });
 }
 
-export function get(url, config) {
+export function get(url, config = { params: {}, data: {}, headers: {} }) {
     return request("GET", url, config);
 }
 
-export function post(url, config) {
+export function post(url, config = { params: {}, data: {}, headers: {} }) {
     return request("POST", url, config);
 }
 
-export function postLogin(url, config) {
+export function postLogin(url, config = { params: {}, data: {}, headers: {} }) {
     return request("POST", url, config, false);
 }
 
-export function put(url, config) {
+export function put(url, config = { params: {}, data: {}, headers: {} }) {
     return request("PUT", url, config);
 }
 
-export function destroy(url, config) {
+export function destroy(url, config = { params: {}, data: {}, headers: {} }) {
     return request("DELETE", url, config);
 }
 
-export function postForm(url, config) {
+export function postForm(url, config = { params: {}, data: {}, headers: {} }) {
     config.headers['Content-Type'] = 'multipart/form-data';
     return request("POST", url, config);
 }
 
-export function putForm(url, config) {
+export function putForm(url, config = { params: {}, data: {}, headers: {} }) {
     config.headers['Content-Type'] = 'multipart/form-data';
     return request("PUT", url, config);
 }
