@@ -69,24 +69,47 @@ const handleLogin = async () => {
 </script>
 <template>
     <div>
-        <v-container class="fill-height">
-            <v-row align="center" justify="center">
-                <v-col cols="12">
-                    <v-card width="400" height="400">
+        <v-container fluid pa-0>
+            <v-row align="center" justify="center" style="height:100vh">
+                <v-col cols="12" class="fill-height d-flex flex-column justify-center align-center">
+                    <v-card width="400" max-height="360" class="rounded-lg">
                         <v-card-title align="center">Administrator Login Page</v-card-title>
                         <v-divider class="my-4"></v-divider>
-                        <v-alert v-if="alert.status" :color="alert.color" :icon="alert.icon" :title="alert.title"
-                            class="mx-4" :text="alert.message"></v-alert>
+                        <v-alert
+                            v-if="alert.status"
+                            :color="alert.color"
+                            :icon="alert.icon"
+                            :title="alert.title"
+                            class="mx-4"
+                            :text="alert.message"
+                        ></v-alert>
                         <v-card-item>
                             <v-form validate-on="submit lazy" @submit.prevent="handleLogin">
-                                <v-text-field type="email" v-model="form.email" density="compact" label="Email"
-                                    :error-messages="rules.email"></v-text-field>
-                                <v-text-field :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                                    :type="showPassword ? 'text' : 'password'" v-model="form.password" density="compact"
-                                    label="Password" :error-messages="rules.password"
-                                    @click:append-inner="showPassword = !showPassword"></v-text-field>
-                                <v-btn :loading="loading" type="submit" block color="primary" class="mt-2"
-                                    text="Login"></v-btn>
+                                <v-text-field
+                                    type="email"
+                                    v-model="form.email"
+                                    density="compact"
+                                    label="Email"
+                                    :error-messages="rules.email"
+                                ></v-text-field>
+                                <v-text-field
+                                    :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                                    :type="showPassword ? 'text' : 'password'"
+                                    v-model="form.password"
+                                    density="compact"
+                                    label="Password"
+                                    :error-messages="rules.password"
+                                    @click:append-inner="showPassword = !showPassword"
+                                ></v-text-field>
+                                <v-btn
+                                    :loading="loading"
+                                    type="submit"
+                                    block
+                                    color="primary"
+                                    class="mt-2"
+                                    text="Login"
+                                    rounded
+                                ></v-btn>
                             </v-form>
                         </v-card-item>
                     </v-card>

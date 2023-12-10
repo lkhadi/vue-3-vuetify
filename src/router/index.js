@@ -35,17 +35,28 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: LoginView,
+      meta: {
+        title: 'Login'
+      }
+    },
+    {
+      path: '/:catchAll(.*)',
+      component: NotFoundView,
+      meta: {
+        title: 'Not Found'
+      }
     }
   ]
 })
 router.beforeEach(async (to, from, next) => {
+  document.title = to.meta.title ? to.meta.title + ' | ' + defaultTitle : defaultTitle;
   const authStore = useAuthStore();
   const isTokenExist = await authStore.getAccessToken();
   if (to.name !== 'login' && isTokenExist === null) {
     authStore.clearCredentials();
     next({ name: 'login' });
   } else if (to.name === 'login' && isTokenExist !== null) {
-    next({ name: 'dashboard' });
+    next({name: 'dashboard'});
   } else {
     next();
   }
