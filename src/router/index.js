@@ -6,6 +6,7 @@ import LoginView from '../views/LoginView.vue';
 import NotFoundView from '../views/NotFoundView.vue';
 import { useAuthStore } from '../stores/auth';
 
+const defaultTitle = import.meta.env.VITE_APP_NAME;
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
