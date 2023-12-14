@@ -3,13 +3,14 @@ import MainLayout from '../components/layouts/MainLayout.vue';
 import HomeView from '../views/ExampleView.vue';
 import AboutView from '../views/AboutView.vue';
 import LoginView from '../views/LoginView.vue';
+import NotFoundView from '../views/NotFoundView.vue';
 import { useAuthStore } from '../stores/auth';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '',
+      path: '/',
       name: '',
       component: MainLayout,
       children: [
@@ -19,6 +20,7 @@ const router = createRouter({
           component: HomeView,
           meta: {
             requiresAuth: true,
+            title: 'Home'
           }
         },
         {
@@ -26,7 +28,8 @@ const router = createRouter({
           path: 'buku',
           component: AboutView,
           meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            title: 'Book'
           }
         }
       ]
