@@ -1,8 +1,9 @@
 <script setup>
 import { ref } from 'vue';
-import { RouterView} from 'vue-router';
+import { RouterView } from 'vue-router';
 import { useDisplay } from 'vuetify';
 import { useAuthStore } from '@/stores/auth';
+import { get } from "@/plugins/axios";
 import SideBar from '@/components/layouts/SideBar.vue';
 const { mobile } = useDisplay();
 
@@ -19,6 +20,11 @@ if (mobile.value) {
 
 const handleDrawer = (value) => {
     drawer.value.drawer = value;
+};
+
+const logout = async () => {
+  await get('/auth/logout');
+  authStore.logout();
 };
 </script>
 <template>
@@ -38,7 +44,7 @@ const handleDrawer = (value) => {
                     <!-- <v-list-item to="/profile">
                         <v-list-item-title class="text-body-2">Profile</v-list-item-title>
                     </v-list-item> -->
-                    <v-list-item density="compact" @click="authStore.logout">
+                    <v-list-item density="compact" @click="logout">
                         <v-list-item-title class="text-body-2">Logout</v-list-item-title>
                     </v-list-item>
                 </v-list>

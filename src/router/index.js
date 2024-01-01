@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import MainLayout from '../components/layouts/MainLayout.vue';
 import HomeView from '../views/ExampleView.vue';
-import AboutView from '../views/AboutView.vue';
 import LoginView from '../views/LoginView.vue';
 import NotFoundView from '../views/NotFoundView.vue';
 import { useAuthStore } from '../stores/auth';
+import childrenRoute from './children';
 
 const defaultTitle = import.meta.env.VITE_APP_NAME;
 const router = createRouter({
@@ -12,28 +12,18 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: '',
       component: MainLayout,
       children: [
         {
-          name: 'dashboard',
+          name: 'home',
           path: '/',
           component: HomeView,
           meta: {
-            requiresAuth: true,
-            title: 'Home'
-          }
-        },
-        {
-          name: 'book',
-          path: 'buku',
-          component: AboutView,
-          meta: {
-            requiresAuth: true,
-            title: 'Book'
+            title: 'Beranda',
+            roles: ['admin', 'staf', 'approver'],
           }
         }
-      ]
+      ].concat(childrenRoute)
     },
     {
       path: '/login',
@@ -44,12 +34,21 @@ const router = createRouter({
       }
     },
     {
-      path: '/:catchAll(.*)',
+      path: '/404',
+      name: 'not-found',
       component: NotFoundView,
       meta: {
         title: 'Not Found'
       }
-    }
+    },
+    {
+      path: '/:catchAll(.*)',
+      name: 'not-found-all',
+      component: NotFoundView,
+      meta: {
+        title: 'Not Found'
+      }
+    },
   ]
 })
 router.beforeEach(async (to, from, next) => {
@@ -60,9 +59,20 @@ router.beforeEach(async (to, from, next) => {
     authStore.clearCredentials();
     next({ name: 'login' });
   } else if (to.name === 'login' && isTokenExist !== null) {
-    next({name: 'dashboard'});
-  } else {
+    next({name: 'home'});
+  } else if (to.name === 'login' && isTokenExist === null) {
     next();
+  } else {
+    const me = authStore.me();
+    if (to.meta.roles === undefined || to.meta.roles.length === 0 || !to.meta.roles.includes(me.role)) {
+      if (to.name !== 'not-found') {
+        next({name: 'not-found'});
+      } else {
+        next();
+      }
+    } else {
+      next();
+    }
   }
 })
 
