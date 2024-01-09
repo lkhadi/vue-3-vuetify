@@ -26,5 +26,8 @@ export const useAuthStore = defineStore('authStore', {
       localStorage.removeItem('user');
       localStorage.removeItem('access_token');
     },
+    me() {
+      return JSON.parse(localStorage.getItem('user'));
+    }
   }
 });

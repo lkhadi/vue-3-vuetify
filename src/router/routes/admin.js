@@ -1,4 +1,4 @@
-import UsersView from '@/views/ExampleView.vue';
+import ExampleView from '@/views/ExampleView.vue';
 
 export default [
     {
