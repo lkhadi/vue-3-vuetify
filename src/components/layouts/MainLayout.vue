@@ -51,7 +51,7 @@ const logout = async () => {
             </v-menu>
         </v-app-bar>
         <v-main>
-            <v-container>
+            <v-container fluid>
                 <RouterView />
             </v-container>
         </v-main>
